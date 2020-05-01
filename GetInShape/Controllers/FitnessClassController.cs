@@ -11,24 +11,24 @@ using GetInShape.Repositories.InstructorRepository;
 using GetInShape.Repositories.GymClubClassRepository;
 using GetInShape.Repositories.GymClubRepository;
 using GetInShape.Repositories.SongRepository;
-using GetInShape.Repositories.ClassRepository;
+using GetInShape.Repositories.FitnessClassRepository;
 
 namespace GetInShape.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClassController : ControllerBase
+    public class FitnessClassController : ControllerBase
     {
-        public IClassRepository IClassRepository { get; set; }
-        public IInstructorClassRepository IInstructorClassRepository { get; set; }
+        public IFitnessClassRepository IFitnessClassRepository { get; set; }
+        public IInstructorFitnessClassRepository IInstructorClassRepository { get; set; }
         public IInstructorRepository IInstructorRepository { get; set; }
-        public IGymClubClassRepository IGymClubClassRepository { get; set; }
+        public IGymClubFitnessClassRepository IGymClubClassRepository { get; set; }
         public IGymClubRepository IGymClubRepository { get; set; }
         public ISongRepository ISongRepository { get; set; }
 
-        public ClassController(IClassRepository classRepository, IInstructorClassRepository instructorClassRepository, IInstructorRepository instructorRepository, IGymClubClassRepository gymClubClassRepository, ISongRepository songRepository, IGymClubRepository gymClubRepository)
+        public FitnessClassController(IFitnessClassRepository fitnessClassRepository, IInstructorFitnessClassRepository instructorClassRepository, IInstructorRepository instructorRepository, IGymClubFitnessClassRepository gymClubClassRepository, ISongRepository songRepository, IGymClubRepository gymClubRepository)
         {
-            IClassRepository = classRepository;
+            IFitnessClassRepository = fitnessClassRepository;
             IInstructorClassRepository = instructorClassRepository;
             IInstructorRepository = instructorRepository;
             ISongRepository = songRepository;
@@ -39,39 +39,41 @@ namespace GetInShape.Controllers
 
         // GET: api/Album
         [HttpGet]
-        public ActionResult<IEnumerable<Class>> Get()
+        public ActionResult<IEnumerable<FitnessClass>> Get()
         {
-            return IClassRepository.GetAll();
+            return IFitnessClassRepository.GetAll();
         }
 
         // GET: api/Album/5
         [HttpGet("{id}")]
-        public ClassDetailsDTO Get(int id)
+        public FitnessClassDetailsDTO Get(int id)
         {
-            Class Class = IClassRepository.Get(id);
-            ClassDetailsDTO MyClass = new ClassDetailsDTO()
+            FitnessClass FitnessClass = IFitnessClassRepository.Get(id);
+            FitnessClassDetailsDTO MyClass = new FitnessClassDetailsDTO()
             {
-                Name = Class.Name,
-                TimeSchedule = Class.TimeSchedule
+                Name = FitnessClass.Name,
+                Img = FitnessClass.Img
+               
             };
 
-            IEnumerable<InstructorClass> MyInstructorClasses = IInstructorClassRepository.GetAll().Where(x => x.ClassId == Class.Id);
+            IEnumerable<InstructorFitnessClass> MyInstructorClasses = IInstructorClassRepository.GetAll().Where(x => x.FitnessClassId == FitnessClass.Id);
             if (MyInstructorClasses != null)
             {
                 List<string> InstructorNameList = new List<string>();
-                foreach (InstructorClass MyInstructorClass in MyInstructorClasses)
+                foreach (InstructorFitnessClass MyInstructorClass in MyInstructorClasses)
                 {
                     Instructor MyInstructor = IInstructorRepository.GetAll().SingleOrDefault(x => x.Id == MyInstructorClass.InstructorId);
-                    InstructorNameList.Add(MyInstructor.FirstName + MyInstructor.LastName);
+                    InstructorNameList.Add(MyInstructor.FirstName + " " +  MyInstructor.LastName);
                 }
                 MyClass.InstructorName = InstructorNameList;
             }
+            
 
-            IEnumerable<GymClubClass> MyGymClubClasses = IGymClubClassRepository.GetAll().Where(x => x.ClassId == Class.Id);
+            IEnumerable<GymClubFitnessClass> MyGymClubClasses = IGymClubClassRepository.GetAll().Where(x => x.FitnessClassId == FitnessClass.Id);
             if (MyGymClubClasses != null)
             {
                 List<string> GymClubNameList = new List<string>();
-                foreach (GymClubClass MyGymClubClass in MyGymClubClasses)
+                foreach (GymClubFitnessClass MyGymClubClass in MyGymClubClasses)
                 {
                     GymClub MyGymClub = IGymClubRepository.GetAll().SingleOrDefault(x => x.Id == MyGymClubClass.GymClubId);
                     GymClubNameList.Add(MyGymClub.Name);
@@ -79,7 +81,7 @@ namespace GetInShape.Controllers
                 MyClass.GymClubName = GymClubNameList;
             }
 
-            IEnumerable<Song> MySongs = ISongRepository.GetAll().Where(x => x.ClassId == Class.Id);
+            IEnumerable<Song> MySongs = ISongRepository.GetAll().Where(x => x.FitnessClassId == FitnessClass.Id);
             if (MySongs != null)
             {
                 List<string> SongNameList = new List<string>();
@@ -96,21 +98,22 @@ namespace GetInShape.Controllers
 
         // POST: api/Album
         [HttpPost]
-        public void Post(ClassDTO value)
+        public void Post(FitnessClassDTO value)
         {
-            Class model = new Class()
+            FitnessClass model = new FitnessClass()
             {
                 Name = value.Name,
-                TimeSchedule = value.TimeSchedule,
+                Img = value.Img
+               
             };
-            IClassRepository.Create(model); // am creat o clasa
+            IFitnessClassRepository.Create(model); // am creat o clasa
 
             // trebuie sa introducem si in tabela de intersectie
             for (int i = 0; i < value.InstructorId.Count; i++)
             {
-                InstructorClass InstructorClass = new InstructorClass()
+                InstructorFitnessClass InstructorClass = new InstructorFitnessClass()
                 {
-                    ClassId = model.Id,
+                    FitnessClassId = model.Id,
                     InstructorId = value.InstructorId[i]
                 };
                 IInstructorClassRepository.Create(InstructorClass);
@@ -118,9 +121,9 @@ namespace GetInShape.Controllers
 
             for (int i = 0; i < value.GymClubId.Count; i++)
             {
-                GymClubClass GymClubClass = new GymClubClass()
+                GymClubFitnessClass GymClubClass = new GymClubFitnessClass()
                 {
-                    ClassId = model.Id,
+                    FitnessClassId = model.Id,
                     GymClubId = value.GymClubId[i]
                 };
                 IGymClubClassRepository.Create(GymClubClass);
@@ -129,32 +132,33 @@ namespace GetInShape.Controllers
 
         // PUT: api/Album/5
         [HttpPut("{id}")]
-        public void Put(int id, ClassDTO value)
+        public void Put(int id, FitnessClassDTO value)
         {
-            Class model = IClassRepository.Get(id);
+            FitnessClass model = IFitnessClassRepository.Get(id);
             if (value.Name != null)
             {
                 model.Name = value.Name;
             }
-            if (value.TimeSchedule != null)
+            if (value.Img != null)
             {
-                model.TimeSchedule = value.TimeSchedule;
+                model.Img = value.Img;
             }
 
-            IClassRepository.Update(model);
+
+            IFitnessClassRepository.Update(model);
 
             //trebuie sa putem face update si la lista de instructori si sali de fitness
 
             if (value.InstructorId != null)
             {
-                IEnumerable<InstructorClass> MyInstructorClasses = IInstructorClassRepository.GetAll().Where(x => x.ClassId == id);
-                foreach (InstructorClass MyInstructorClass in MyInstructorClasses)
+                IEnumerable<InstructorFitnessClass> MyInstructorClasses = IInstructorClassRepository.GetAll().Where(x => x.FitnessClassId == id);
+                foreach (InstructorFitnessClass MyInstructorClass in MyInstructorClasses)
                     IInstructorClassRepository.Delete(MyInstructorClass);
                 for (int i = 0; i < value.InstructorId.Count; i++)
                 {
-                    InstructorClass InstructorClass = new InstructorClass()
+                    InstructorFitnessClass InstructorClass = new InstructorFitnessClass()
                     {
-                        ClassId = model.Id,
+                        FitnessClassId = model.Id,
                         InstructorId = value.InstructorId[i]
                     };
                     IInstructorClassRepository.Create(InstructorClass);
@@ -162,14 +166,14 @@ namespace GetInShape.Controllers
             }
             if (value.GymClubId != null)
             {
-                IEnumerable<GymClubClass> MyGymClubClasses = IGymClubClassRepository.GetAll().Where(x => x.ClassId == id);
-                foreach (GymClubClass MyGymClubClass in MyGymClubClasses)
+                IEnumerable<GymClubFitnessClass> MyGymClubClasses = IGymClubClassRepository.GetAll().Where(x => x.FitnessClassId == id);
+                foreach (GymClubFitnessClass MyGymClubClass in MyGymClubClasses)
                     IGymClubClassRepository.Delete(MyGymClubClass);
                 for (int i = 0; i < value.GymClubId.Count; i++)
                 {
-                    GymClubClass GymClubClass = new GymClubClass()
+                    GymClubFitnessClass GymClubClass = new GymClubFitnessClass()
                     {
-                        ClassId = model.Id,
+                        FitnessClassId = model.Id,
                         GymClubId = value.GymClubId[i]
                     };
                     IGymClubClassRepository.Create(GymClubClass);
@@ -180,14 +184,10 @@ namespace GetInShape.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public Class Delete(int id)
+        public FitnessClass Delete(int id)
         {
-            Class Class = IClassRepository.Get(id);
-            return IClassRepository.Delete(Class);
-
-            // trebuie sa sterg si din tabelele de legatura
-            // deci facem controllere si pt songAlbum si artitAlbum
-            
+            FitnessClass FitnessClass = IFitnessClassRepository.Get(id);
+            return IFitnessClassRepository.Delete(FitnessClass); 
         }
     }
 }

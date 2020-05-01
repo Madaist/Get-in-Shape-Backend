@@ -9,8 +9,9 @@ namespace GetInShape.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
         public int AddressId { get; set; }
-        public List<GymClubClass> GymClubClass { get; set; }
+
+        public virtual Address Address { get; set; }
+        public List<GymClubFitnessClass> GymClubFitnessClass { get; set; }
     }
 }

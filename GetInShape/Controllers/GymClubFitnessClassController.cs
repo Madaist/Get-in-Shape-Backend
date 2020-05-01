@@ -12,62 +12,68 @@ namespace GetInShape.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GymClubClassController : ControllerBase
+    public class GymClubFitnessClassController : ControllerBase
     {
-        public IGymClubClassRepository IGymClubClassRepository { get; set; }
+        public IGymClubFitnessClassRepository IGymClubClassRepository { get; set; }
 
-        public GymClubClassController(IGymClubClassRepository repository)
+        public GymClubFitnessClassController(IGymClubFitnessClassRepository repository)
         {
             IGymClubClassRepository = repository;
         }
 
         // GET: api/Provider
         [HttpGet]
-        public ActionResult<IEnumerable<GymClubClass>> Get()
+        public ActionResult<IEnumerable<GymClubFitnessClass>> Get()
         {
             return IGymClubClassRepository.GetAll();
         }
 
         // GET: api/Provider/5
         [HttpGet("{id}")]
-        public ActionResult<GymClubClass> Get(int id)
+        public ActionResult<GymClubFitnessClass> Get(int id)
         {
             return IGymClubClassRepository.Get(id);
         }
 
         // POST: api/Provider
         [HttpPost]
-        public GymClubClass Post(GymClubClassDTO value)
+        public GymClubFitnessClass Post(GymClubFitnessClassDTO value)
         {
-            GymClubClass model = new GymClubClass()
+            GymClubFitnessClass model = new GymClubFitnessClass()
             {
                 GymClubId = value.GymClubId,
-                ClassId = value.ClassId
+                FitnessClassId = value.FitnessClassId,
+                TimeSchedule = value.TimeSchedule
+
             };
             return IGymClubClassRepository.Create(model);
         }
 
         // PUT: api/Provider/5
         [HttpPut("{id}")]
-        public GymClubClass Put(int id, GymClubClassDTO value)
+        public GymClubFitnessClass Put(int id, GymClubFitnessClassDTO value)
         {
-            GymClubClass model = IGymClubClassRepository.Get(id);
+            GymClubFitnessClass model = IGymClubClassRepository.Get(id);
             if (value.GymClubId != 0)
             {
                 model.GymClubId = value.GymClubId;
             }
-            if (value.ClassId != 0)
+            if (value.FitnessClassId != 0)
             {
-                model.ClassId = value.ClassId;
+                model.FitnessClassId = value.FitnessClassId;
+            }
+            if (value.TimeSchedule != null)
+            {
+                model.TimeSchedule = value.TimeSchedule;
             }
             return IGymClubClassRepository.Update(model);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public GymClubClass Delete(int id)
+        public GymClubFitnessClass Delete(int id)
         {
-            GymClubClass model = IGymClubClassRepository.Get(id);
+            GymClubFitnessClass model = IGymClubClassRepository.Get(id);
             return IGymClubClassRepository.Delete(model);
         }
     }

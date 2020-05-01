@@ -10,6 +10,6 @@ namespace GetInShape.DTOs
         public string Name { get; set; }
         public string Singer { get; set; }
         public int Bpm { get; set; }
-        public int ClassId { get; set; }
+        public int FitnessClassId { get; set; }
     }
 }

@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 namespace GetInShape.DTOs
 {
     // pentru inserare
-    public class ClassDTO
+    public class FitnessClassDTO
     {
         public string Name { get; set; }
-        public DateTime TimeSchedule { get; set; }
+        public string Img { get; set; }
+       
 
         public List<int> InstructorId { get; set; }
         public List<int> SongId { get; set; }

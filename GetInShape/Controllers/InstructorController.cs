@@ -8,7 +8,7 @@ using GetInShape.Repositories.InstructorRepository;
 using GetInShape.Repositories.InstructorClassRepository;
 using GetInShape.Repositories.SpecializationRepository;
 using GetInShape.Repositories.InstructorSpecializationRepository;
-using GetInShape.Repositories.ClassRepository;
+using GetInShape.Repositories.FitnessClassRepository;
 using GetInShape.Models;
 using GetInShape.DTOs;
 
@@ -20,12 +20,12 @@ namespace GetInShape.Controllers
     public class InstructorController : ControllerBase
     {
         public IInstructorRepository IInstructorRepository { get; set; }
-        public IInstructorClassRepository IInstructorClassRepository { get; set; }
+        public IInstructorFitnessClassRepository IInstructorClassRepository { get; set; }
         public ISpecializationRepository ISpecializationRepository { get; set; }
         public IInstructorSpecializationRepository IInstructorSpecializationRepository { get; set; }
         
 
-        public InstructorController(IInstructorRepository instructorRepository, IInstructorClassRepository instructorClassRepository, ISpecializationRepository specializationRepository, IInstructorSpecializationRepository instructorSpecializationRepository)
+        public InstructorController(IInstructorRepository instructorRepository, IInstructorFitnessClassRepository instructorClassRepository, ISpecializationRepository specializationRepository, IInstructorSpecializationRepository instructorSpecializationRepository)
         {
            
             IInstructorClassRepository = instructorClassRepository;

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using GetInShape.Models;
 using GetInShape.DTOs;
 using GetInShape.Repositories.SongRepository;
-using GetInShape.Repositories.ClassRepository;
+using GetInShape.Repositories.FitnessClassRepository;
 
 namespace GetInShape.Controllers
 {
@@ -16,7 +16,7 @@ namespace GetInShape.Controllers
     public class SongController : ControllerBase
     {
         public ISongRepository ISongRepository { get; set; }
-        public IClassRepository IClassRepository { get; set; }
+        public IFitnessClassRepository IFitnessClassRepository { get; set; }
 
         public SongController(ISongRepository repository)
         {
@@ -46,7 +46,7 @@ namespace GetInShape.Controllers
                 Name = value.Name,
                 Singer = value.Singer,
                 Bpm = value.Bpm,
-                ClassId = value.ClassId
+                FitnessClassId = value.FitnessClassId
             };
             return ISongRepository.Create(model);
         }
@@ -60,9 +60,9 @@ namespace GetInShape.Controllers
             {
                 model.Name = value.Name;
             }
-            if (value.ClassId != 0)
+            if (value.FitnessClassId != 0)
             {
-                model.ClassId = value.ClassId;
+                model.FitnessClassId = value.FitnessClassId;
             }
             if (value.Singer != null)
             {

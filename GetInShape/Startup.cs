@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using GetInShape.Contexts;
 using GetInShape.Repositories.AddressRepository;
-using GetInShape.Repositories.ClassRepository;
+using GetInShape.Repositories.FitnessClassRepository;
 using GetInShape.Repositories.GymClubClassRepository;
 using GetInShape.Repositories.GymClubRepository;
 using GetInShape.Repositories.InstructorClassRepository;
@@ -41,10 +41,10 @@ namespace GetInShape
             services.AddDbContext<Context>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddTransient<IAddressRepository, AddressRepository>();
-            services.AddTransient<IClassRepository, ClassRepository>();
-            services.AddTransient<IGymClubClassRepository, GymClubClassRepository>();
+            services.AddTransient<IFitnessClassRepository, FitnessClassRepository>();
+            services.AddTransient<IGymClubFitnessClassRepository, GymClubFitnessClassRepository>();
             services.AddTransient<IGymClubRepository, GymClubRepository>();
-            services.AddTransient<IInstructorClassRepository, InstructorClassRepository>();
+            services.AddTransient<IInstructorFitnessClassRepository, InstructorFitnessClassRepository>();
             services.AddTransient<IInstructorRepository, InstructorRepository>();
             services.AddTransient<IInstructorSpecializationRepository, InstructorSpecializationRepository>();
             services.AddTransient<ISongRepository, SongRepository>();

@@ -11,7 +11,8 @@ namespace GetInShape.Models
         public string LastName { get; set; }
         public string FirstName { get; set; }
 
+
         public List<InstructorSpecialization> InstructorSpecialization { get; set; }
-        public List<InstructorClass> InstructorClass { get; set; }
+        public List<InstructorFitnessClass> InstructorClass { get; set; }
     }
 }

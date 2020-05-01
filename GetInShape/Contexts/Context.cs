@@ -10,12 +10,12 @@ namespace GetInShape.Contexts
     public class Context : DbContext // implementeaza DbContext
     {
         public DbSet<Address> Addresses { get; set; } 
-        public DbSet<Class> Classes { get; set; }
+        public DbSet<FitnessClass> FitnessClasses { get; set; }
         public DbSet<GymClub> GymClubs { get; set; }
-        public DbSet<GymClubClass> GymClubClasses { get; set; }
+        public DbSet<GymClubFitnessClass> GymClubClasses { get; set; }
         public DbSet<Song> Songs { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
-        public DbSet<InstructorClass> InstructorClasses { get; set; }
+        public DbSet<InstructorFitnessClass> InstructorClasses { get; set; }
         public DbSet<InstructorSpecialization> InstructorSpecializations { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
       

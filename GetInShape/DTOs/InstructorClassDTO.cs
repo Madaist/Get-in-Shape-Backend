@@ -8,6 +8,6 @@ namespace GetInShape.DTOs
     public class InstructorClassDTO
     {
         public int InstructorId { get; set; }
-        public int ClassId { get; set; }
+        public int FitnessClassId { get; set; }
     }
 }

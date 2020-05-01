@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace GetInShape.Models
 {
-    public class InstructorClass
+    public class InstructorFitnessClass
     {
         public int Id { get; set; }
         public int InstructorId { get; set; }
-        public int ClassId { get; set; }
+        public int FitnessClassId { get; set; }
 
         public virtual Instructor Instructor { get; set; }
-        public virtual Class Class { get; set; }
+        public virtual FitnessClass FitnessClass { get; set; }
     }
 }

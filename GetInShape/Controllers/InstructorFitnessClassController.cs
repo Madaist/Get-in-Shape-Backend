@@ -12,62 +12,62 @@ namespace GetInShape.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class InstructorClassController : ControllerBase
+    public class InstructorFitnessClassController : ControllerBase
     {
-        public IInstructorClassRepository IInstructorClassRepository { get; set; }
+        public IInstructorFitnessClassRepository IInstructorClassRepository { get; set; }
 
-        public InstructorClassController(IInstructorClassRepository repository)
+        public InstructorFitnessClassController(IInstructorFitnessClassRepository repository)
         {
             IInstructorClassRepository = repository;
         }
 
         // GET: api/Provider
         [HttpGet]
-        public ActionResult<IEnumerable<InstructorClass>> Get()
+        public ActionResult<IEnumerable<InstructorFitnessClass>> Get()
         {
             return IInstructorClassRepository.GetAll();
         }
 
         // GET: api/Provider/5
         [HttpGet("{id}")]
-        public ActionResult<InstructorClass> Get(int id)
+        public ActionResult<InstructorFitnessClass> Get(int id)
         {
             return IInstructorClassRepository.Get(id);
         }
 
         // POST: api/Provider
         [HttpPost]
-        public InstructorClass Post(InstructorClassDTO value)
+        public InstructorFitnessClass Post(InstructorClassDTO value)
         {
-            InstructorClass model = new InstructorClass()
+            InstructorFitnessClass model = new InstructorFitnessClass()
             {
                 InstructorId = value.InstructorId,
-                ClassId = value.ClassId
+                FitnessClassId = value.FitnessClassId
             };
             return IInstructorClassRepository.Create(model);
         }
 
         // PUT: api/Provider/5
         [HttpPut("{id}")]
-        public InstructorClass Put(int id, InstructorClassDTO value)
+        public InstructorFitnessClass Put(int id, InstructorClassDTO value)
         {
-            InstructorClass model = IInstructorClassRepository.Get(id);
+            InstructorFitnessClass model = IInstructorClassRepository.Get(id);
             if (value.InstructorId != 0)
             {
                 model.InstructorId = value.InstructorId;
             }
-            if (value.ClassId != 0)
+            if (value.FitnessClassId != 0)
             {
-                model.ClassId = value.ClassId;
+                model.FitnessClassId = value.FitnessClassId;
             }
             return IInstructorClassRepository.Update(model);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public InstructorClass Delete(int id)
+        public InstructorFitnessClass Delete(int id)
         {
-            InstructorClass model = IInstructorClassRepository.Get(id);
+            InstructorFitnessClass model = IInstructorClassRepository.Get(id);
             return IInstructorClassRepository.Delete(model);
         }
     }

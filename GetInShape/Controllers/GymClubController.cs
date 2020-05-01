@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using GetInShape.Repositories.AddressRepository;
 using GetInShape.Repositories.GymClubClassRepository;
 using GetInShape.Repositories.GymClubRepository;
-using GetInShape.Repositories.ClassRepository;
+using GetInShape.Repositories.FitnessClassRepository;
 using GetInShape.Models;
 using GetInShape.DTOs;
 
@@ -18,17 +18,17 @@ namespace GetInShape.Controllers
     public class GymClubController : ControllerBase
     {
         public IAddressRepository IAddressRepository { get; set; }
-        public IGymClubClassRepository IGymClubClassRepository { get; set; }
+        public IGymClubFitnessClassRepository IGymClubClassRepository { get; set; }
         public IGymClubRepository IGymClubRepository { get; set; }
-        public IClassRepository IClassRepository { get; set; }
+        public IFitnessClassRepository IFitnessClassRepository { get; set; }
     
 
-        public GymClubController(IAddressRepository addressRepository, IGymClubClassRepository gymClubClassRepository, IGymClubRepository gymClubRepository, IClassRepository classRepository)
+        public GymClubController(IAddressRepository addressRepository, IGymClubFitnessClassRepository gymClubClassRepository, IGymClubRepository gymClubRepository, IFitnessClassRepository fitnessClassRepository)
         {
             IAddressRepository = addressRepository;
             IGymClubClassRepository = gymClubClassRepository;
             IGymClubRepository = gymClubRepository;
-            IClassRepository = classRepository;
+            IFitnessClassRepository = fitnessClassRepository;
             
         }
 
@@ -61,10 +61,10 @@ namespace GetInShape.Controllers
             // trebuie sa introducem si in tabela de intersectie
             for (int i = 0; i < value.ClassId.Count; i++)
             {
-                GymClubClass GymClubClass = new GymClubClass()
+                GymClubFitnessClass GymClubClass = new GymClubFitnessClass()
                 {
                     GymClubId = model.Id,
-                    ClassId = value.ClassId[i]
+                    FitnessClassId = value.ClassId[i]
                 };
                 IGymClubClassRepository.Create(GymClubClass);
             }
@@ -91,15 +91,15 @@ namespace GetInShape.Controllers
 
             if (value.ClassId != null)
             {
-                IEnumerable<GymClubClass> MyGymClubClasses = IGymClubClassRepository.GetAll().Where(x => x.GymClubId == id);
-                foreach (GymClubClass MyGymClubClass in MyGymClubClasses)
+                IEnumerable<GymClubFitnessClass> MyGymClubClasses = IGymClubClassRepository.GetAll().Where(x => x.GymClubId == id);
+                foreach (GymClubFitnessClass MyGymClubClass in MyGymClubClasses)
                     IGymClubClassRepository.Delete(MyGymClubClass);
                 for (int i = 0; i < value.ClassId.Count; i++)
                 {
-                    GymClubClass GymClubClass = new GymClubClass()
+                    GymClubFitnessClass GymClubClass = new GymClubFitnessClass()
                     {
                         GymClubId = model.Id,
-                        ClassId = value.ClassId[i]
+                        FitnessClassId = value.ClassId[i]
                     };
                     IGymClubClassRepository.Create(GymClubClass);
                 }
@@ -113,10 +113,6 @@ namespace GetInShape.Controllers
         {
             GymClub album = IGymClubRepository.Get(id);
             return IGymClubRepository.Delete(album);
-
-            // trebuie sa sterg si din tabelele de legatura
-            // deci facem controllere si pt songAlbum si artitAlbum
-
         }
     }
 }

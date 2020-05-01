@@ -8,39 +8,39 @@ using GetInShape.Models;
 
 namespace GetInShape.Repositories.InstructorClassRepository
 {
-    public class InstructorClassRepository : IInstructorClassRepository
+    public class InstructorFitnessClassRepository : IInstructorFitnessClassRepository
     {
         public Context _context { get; set; }
-        public InstructorClassRepository(Context context)
+        public InstructorFitnessClassRepository(Context context)
         {
             _context = context;
         }
 
-        public InstructorClass Create(InstructorClass InstructorClass)
+        public InstructorFitnessClass Create(InstructorFitnessClass InstructorClass)
         {
-            var result = _context.Add<InstructorClass>(InstructorClass);
+            var result = _context.Add<InstructorFitnessClass>(InstructorClass);
             _context.SaveChanges();
             return result.Entity;
         }
 
-        public InstructorClass Get(int Id)
+        public InstructorFitnessClass Get(int Id)
         {
             return _context.InstructorClasses.SingleOrDefault(x => x.Id == Id);
         }
 
-        public List<InstructorClass> GetAll()
+        public List<InstructorFitnessClass> GetAll()
         {
             return _context.InstructorClasses.ToList();
         }
 
-        public InstructorClass Update(InstructorClass InstructorClass)
+        public InstructorFitnessClass Update(InstructorFitnessClass InstructorClass)
         {
             _context.Entry(InstructorClass).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             _context.SaveChanges();
             return InstructorClass;
         }
 
-        public InstructorClass Delete(InstructorClass InstructorClass)
+        public InstructorFitnessClass Delete(InstructorFitnessClass InstructorClass)
         {
             var result = _context.Remove(InstructorClass);
             _context.SaveChanges();

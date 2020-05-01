@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace GetInShape.DTOs
 {
-    public class GymClubClassDTO
+    public class GymClubFitnessClassDTO
     {
         public int GymClubId { get; set; }
-        public int ClassId { get; set; }
+        public int FitnessClassId { get; set; }
+        public DateTime TimeSchedule { get; set; }
     }
 }
