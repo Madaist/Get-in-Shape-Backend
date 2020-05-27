@@ -41,6 +41,8 @@ namespace GetInShape.Controllers
         [HttpPost]
         public Song Post(SongDTO value)
         {
+            Console.Write("fitness class id: " + value.FitnessClassId);
+
             Song model = new Song()
             {
                 Name = value.Name,
@@ -48,6 +50,7 @@ namespace GetInShape.Controllers
                 Bpm = value.Bpm,
                 FitnessClassId = value.FitnessClassId
             };
+
             return ISongRepository.Create(model);
         }
 
